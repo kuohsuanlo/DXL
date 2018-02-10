@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>io.github.dre2n</groupId>
+    <artifactId>commons</artifactId>
+    <version>3.1.4</version>
+    <packaging>pom</packaging>
+    <name>DRECommons</name>
+    <url>https://dre2n.github.io</url>
+    <description>Shared code between DungeonsXL, ItemsXL, Holographic Menus and other Bukkit plugins by DRE2N.</description>
+    <properties>
+        <buildNo></buildNo>
+        <skipTests>true</skipTests>
+    </properties>
+    <modules>
+        <module>core</module>
+        <module>abstract</module>
+        
+        <module>craftbukkit_1_12_R1</module>
+        <module>craftbukkit_1_11_R1</module>
+        <module>craftbukkit_1_10_R1</module>
+        <module>craftbukkit_1_9_R2</module>
+        <module>craftbukkit_1_9_R1</module>
+    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mcstats.bukkit</groupId>
+            <artifactId>metrics</artifactId>
+            <version>R8-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.inventivetalent.update</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.0.1</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>vault-repo</id>
+            <url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
+        </repository>
+        <repository>
+            <id>Plugin Metrics</id>
+            <url>http://repo.mcstats.org/content/repositories/public</url>
+        </repository>
+        <repository>
+            <id>inventive-repo</id>
+            <url>http://repo.inventivetalent.org/content/groups/public/</url>
+        </repository>
+    </repositories>
+</project>

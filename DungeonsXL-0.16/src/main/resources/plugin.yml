@@ -1,0 +1,11 @@
+name: DungeonsXL
+main: io.github.dre2n.dungeonsxl.DungeonsXL
+version: ${project.version}${buildNo}
+authors: [Frank Baumann, Milan Albrecht, Tobias Schmitz, Daniel Saukel]
+description: ${project.description}
+website: ${project.url}
+softdepend: [CommandsXL, ItemsXL, Vault, Citizens, CustomMobs, InsaneMobs, MythicMobs, HolographicDisplays]
+commands:
+  dungeonsxl:
+    description: Reference command for DungeonsXL.
+    aliases: [dxl,dungeon]
