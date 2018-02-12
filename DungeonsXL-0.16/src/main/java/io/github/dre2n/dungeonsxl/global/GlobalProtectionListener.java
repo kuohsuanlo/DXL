@@ -23,12 +23,16 @@ import io.github.dre2n.dungeonsxl.player.DGlobalPlayer;
 import io.github.dre2n.dungeonsxl.player.DPermission;
 import io.github.dre2n.dungeonsxl.util.LegacyUtil;
 import io.github.dre2n.dungeonsxl.world.DEditWorld;
+import io.github.kuohsuanlo.claim.utils.ClaimUtils;
+
 import java.util.List;
+
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
@@ -44,11 +48,11 @@ import org.bukkit.inventory.ItemStack;
  * @author Daniel Saukel, Wooyoung Son, Frank Baumann, Milan Albrecht
  */
 public class GlobalProtectionListener implements Listener {
-
     DungeonsXL plugin = DungeonsXL.getInstance();
-
-    @EventHandler
+    
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onBlockBreakWithSignOnIt(BlockBreakEvent event) {
+    	
         Block block = event.getBlock();
         Player player = event.getPlayer();
 
@@ -71,7 +75,8 @@ public class GlobalProtectionListener implements Listener {
         event.setCancelled(bbe.isCancelled());
     }
 
-    @EventHandler
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
         Player player = event.getPlayer();
@@ -85,21 +90,24 @@ public class GlobalProtectionListener implements Listener {
         }
     }
 
-    @EventHandler
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onBlockSpread(BlockSpreadEvent event) {
         if (DPortal.getByBlock(event.getBlock()) != null) {
             event.setCancelled(true);
         }
     }
 
-    @EventHandler
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onBlockPhysics(BlockPhysicsEvent event) {
         if (DPortal.getByBlock(event.getBlock()) != null) {
             event.setCancelled(true);
         }
     }
 
-    @EventHandler
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onEntityExplode(EntityExplodeEvent event) {
         List<Block> blocklist = event.blockList();
         for (Block block : blocklist) {
@@ -109,7 +117,8 @@ public class GlobalProtectionListener implements Listener {
         }
     }
 
-    @EventHandler
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         DPortal dPortal = DPortal.getByLocation(player.getEyeLocation());
@@ -126,7 +135,8 @@ public class GlobalProtectionListener implements Listener {
         dPortal.teleport(player);
     }
 
-    @EventHandler
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onPlayerPortal(PlayerPortalEvent event) {
         Block block1 = event.getFrom().getBlock();
         Block block2 = block1.getRelative(BlockFace.WEST);
@@ -138,7 +148,8 @@ public class GlobalProtectionListener implements Listener {
         }
     }
 
-    @EventHandler
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onPortalCreation(PlayerInteractEvent event) {
         DGlobalPlayer dPlayer = plugin.getDPlayers().getByPlayer(event.getPlayer());
         if (!dPlayer.isCreatingPortal()) {
@@ -174,7 +185,8 @@ public class GlobalProtectionListener implements Listener {
 
     /* SUBJECT TO CHANGE */
     @Deprecated
-    @EventHandler
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (plugin.getDPlayers().getByPlayer(player).isInBreakMode()) {
@@ -205,7 +217,8 @@ public class GlobalProtectionListener implements Listener {
     }
 
     @Deprecated
-    @EventHandler
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onSignChange(SignChangeEvent event) {
         Player player = event.getPlayer();
         Block block = event.getBlock();
