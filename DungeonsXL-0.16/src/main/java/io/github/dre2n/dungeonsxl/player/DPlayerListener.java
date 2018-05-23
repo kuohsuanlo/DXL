@@ -559,13 +559,13 @@ public class DPlayerListener implements Listener {
             if (dGameWorld != null || DEditWorld.getByWorld(player.getWorld()) != null) {
                 if (event.getAction() != Action.LEFT_CLICK_BLOCK) {
                     if (clickedBlock.getType() == Material.ENDER_CHEST) {
-                        if (!DPermission.hasPermission(player, DPermission.BYPASS)) {
+                        if (!DPermission.hasPermission(player, DPermission.ENDERCHEST)) {
                             MessageUtil.sendMessage(player, DMessage.ERROR_ENDERCHEST.getMessage());
                             event.setCancelled(true);
                         }
 
                     } else if (LegacyUtil.isBed(clickedBlock.getType())) {
-                        if (!DPermission.hasPermission(player, DPermission.BYPASS)) {
+                        if (!DPermission.hasPermission(player, DPermission.BED)) {
                             MessageUtil.sendMessage(player, DMessage.ERROR_BED.getMessage());
                             event.setCancelled(true);
                         }
@@ -577,7 +577,7 @@ public class DPlayerListener implements Listener {
             if (dGameWorld != null) {
                 if (event.getAction() != Action.LEFT_CLICK_BLOCK) {
                     if (clickedBlock.getType() == Material.DISPENSER) {
-                        if (!DPermission.hasPermission(player, DPermission.BYPASS)) {
+                        if (!DPermission.hasPermission(player, DPermission.DISPENSER)) {
                             MessageUtil.sendMessage(player, DMessage.ERROR_DISPENSER.getMessage());
                             event.setCancelled(true);
                         }
