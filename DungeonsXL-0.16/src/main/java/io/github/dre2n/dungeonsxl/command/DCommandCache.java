@@ -45,6 +45,7 @@ public class DCommandCache extends DRECommandCache {
     public static JoinCommand JOIN = new JoinCommand();
     public static KickCommand KICK = new KickCommand();
     public static LeaveCommand LEAVE = new LeaveCommand();
+    public static LeaveForceCommand LEAVEFORCE = new LeaveForceCommand();
     public static ListCommand LIST = new ListCommand();
     public static LivesCommand LIVES = new LivesCommand();
     public static MainCommand MAIN = new MainCommand();
@@ -75,6 +76,7 @@ public class DCommandCache extends DRECommandCache {
                 JOIN,
                 KICK,
                 LEAVE,
+                LEAVEFORCE,
                 LIST,
                 LIVES,
                 MAIN,

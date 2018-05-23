@@ -96,6 +96,8 @@ public class ReadySign extends DSign {
 
         if (!lines[2].isEmpty()) {
             autoStart = NumberUtil.parseDouble(lines[2], -1);
+           
+           
         }
 
         if (!getTriggers().isEmpty()) {
