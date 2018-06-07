@@ -116,12 +116,19 @@ public class ReadySign extends DSign {
         getSign().setLine(2, ChatColor.DARK_RED + gameType.getSignName());
         getSign().setLine(3, ChatColor.DARK_BLUE + "############");
         getSign().update();
+        
     }
 
     @Override
     public boolean onPlayerTrigger(Player player) {
+    	if(getGame()==null  ||  getGame().hasStarted()){
+    		return false;
+    	}
+    	
+    	/*Autostarting by DPlayerListener - onPlayerJoinDungeon*/
+    	/*
         ready(DGamePlayer.getByPlayer(player));
-
+    	
         if (!triggered && autoStart >= 0) {
             triggered = true;
 
@@ -136,8 +143,9 @@ public class ReadySign extends DSign {
                 ProgressBar.sendProgressBar(getGame().getPlayers(), (int) Math.ceil(autoStart));
             }
         }
-
-        return true;
+    	*/
+    	triggered = true;
+        return false;
     }
 
     @Override
@@ -145,12 +153,13 @@ public class ReadySign extends DSign {
         if (getGame() == null) {
             return;
         }
-
+        /*
         for (Player player : getGame().getPlayers()) {
             ready(DGamePlayer.getByPlayer(player));
         }
+        */
     }
-
+    /*
     private void ready(DGamePlayer dPlayer) {
         if (dPlayer == null) {
             return;
@@ -172,7 +181,7 @@ public class ReadySign extends DSign {
             MessageUtil.sendMessage(dPlayer.getPlayer(), plugin.getMessageConfig().getMessage(dPlayer.isReady() ? DMessage.PLAYER_READY : DMessage.ERROR_READY));
         }
     }
-
+ 	*/
     @Override
     public DSignType getType() {
         return type;
