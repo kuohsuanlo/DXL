@@ -21,6 +21,8 @@ import io.github.dre2n.dungeonsxl.DungeonsXL;
 import io.github.dre2n.dungeonsxl.config.DMessage;
 import io.github.dre2n.dungeonsxl.config.MainConfig;
 import io.github.dre2n.dungeonsxl.game.Game;
+import io.github.dre2n.dungeonsxl.game.GameType;
+import io.github.dre2n.dungeonsxl.game.GameTypeDefault;
 import io.github.dre2n.dungeonsxl.mob.DMob;
 import io.github.dre2n.dungeonsxl.trigger.UseItemTrigger;
 import io.github.dre2n.dungeonsxl.util.LegacyUtil;
@@ -28,7 +30,9 @@ import io.github.dre2n.dungeonsxl.util.ParsingUtil;
 import io.github.dre2n.dungeonsxl.world.DEditWorld;
 import io.github.dre2n.dungeonsxl.world.DGameWorld;
 import io.github.dre2n.dungeonsxl.world.block.LockedDoor;
+
 import java.util.ArrayList;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -73,6 +77,48 @@ public class DPlayerListener implements Listener {
         this.dPlayers = dPlayers;
     }
 
+    private void AutoReady(DGameWorld gameWorld){
+	    for (Player player : gameWorld.getGame().getPlayers()) {
+	    	DGamePlayer dPlayer = DGamePlayer.getByPlayer(player);
+		    if (gameWorld.getClassesSigns().isEmpty() || dPlayer.getDClass() != null) {
+		    	GameType forced = null;
+		        if (gameWorld.getConfig() != null) {
+		            forced = gameWorld.getConfig().getForcedGameType();
+		        }
+		        dPlayer.ready(forced == null ? GameTypeDefault.PVE_LIMITED_MOBS: forced);
+		    }
+		
+		    if (dPlayer.isReady()) {
+		        MessageUtil.sendMessage(dPlayer.getPlayer(), plugin.getMessageConfig().getMessage(dPlayer.isReady() ? DMessage.PLAYER_READY : DMessage.ERROR_READY));
+		    }
+	    }
+
+    }
+    @EventHandler
+    public void onPlayerJoinDungeon(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+        if (isCitizensNPC(player)) {
+            return;
+        }
+        DGamePlayer dPlayer = DGamePlayer.getByPlayer(player);
+
+        if (dPlayer == null) {
+            return;
+        }
+
+        //AutoStart
+        World world = event.getTo().getWorld();
+        DGameWorld dGameWorld = DGameWorld.getByWorld(world);
+        if (dGameWorld == null) {
+            return;
+        }
+        if (!dGameWorld.isPlaying()) {
+            dGameWorld.getGame().setStarted(true);
+            dGameWorld.startGame();
+            AutoReady(dGameWorld);
+        }
+    }
+    
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         World world = event.getEntity().getWorld();
@@ -82,11 +128,12 @@ public class DPlayerListener implements Listener {
             return;
         }
 
-        // Deny all Damage in Lobby
+        //AutoStart
         if (!gameWorld.isPlaying()) {
             event.setCancelled(true);
         }
-
+        
+        // Deny all Damage in Lobby
         if (!(event.getEntity() instanceof LivingEntity)) {
             return;
         }
@@ -128,9 +175,6 @@ public class DPlayerListener implements Listener {
             return;
         }
 
-        if (!game.hasStarted()) {
-            return;
-        }
 
         boolean pvp = game.getRules().isPlayerVersusPlayer();
         boolean friendlyFire = game.getRules().isFriendlyFire();
@@ -554,6 +598,7 @@ public class DPlayerListener implements Listener {
         }
         Block clickedBlock = event.getClickedBlock();
         DGameWorld dGameWorld = DGameWorld.getByWorld(player.getWorld());
+        
         if (clickedBlock != null) {
             // Block Enderchests
             if (dGameWorld != null || DEditWorld.getByWorld(player.getWorld()) != null) {
