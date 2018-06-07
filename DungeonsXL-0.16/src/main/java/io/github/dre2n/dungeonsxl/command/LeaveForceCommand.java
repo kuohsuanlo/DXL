@@ -57,6 +57,31 @@ public class LeaveForceCommand extends DRECommand {
     @Override
     public void onExecute(String[] args, CommandSender sender) {
         Player player = (Player) sender;
+
+
+        
+		List<Game> Gamelist= DungeonsXL.getInstance().getGames();
+        	
+        for (Game game : Gamelist) {
+        	for(Player somePlayer : game.getPlayers()){
+        		if(player.getName().equals(somePlayer.getName())){
+        			game.delete();
+        			System.out.println("Game delete : "+player.getName());
+        		}
+        	}
+        }
+        
+		List<DGroup> dGroups = DungeonsXL.getInstance().getDGroups();
+		for (DGroup dGroup : dGroups) {
+			for (DGamePlayer dGamePlayer : dGroup.getDGamePlayers()) {
+	        	if(dGamePlayer.getName().equals(player.getName())){
+	        		dGroup.removePlayer(player);
+	        		dGroup.delete();
+	        		System.out.println("dGamePlayer remove : "+dGamePlayer.getName());
+	        	}
+	        }
+        }
+		/*Proper order to remove all object*/
         List<DInstancePlayer> dPlayers = DungeonsXL.getInstance().getDPlayers().getDInstancePlayers();
         for (DInstancePlayer dPlayer : new ArrayList<DInstancePlayer>(dPlayers)) {
         	if(dPlayer.getName().equals(player.getName())){
@@ -65,7 +90,7 @@ public class LeaveForceCommand extends DRECommand {
         	}
         }
         
-        
+
 		List<DGlobalPlayer> dGPlayers = DungeonsXL.getInstance().getDPlayers().getDGlobalPlayers();
 		for (DGlobalPlayer dGPlayer : new ArrayList<DGlobalPlayer>(dGPlayers)) {
         	if(dGPlayer.getName().equals(player.getName())){
@@ -73,30 +98,8 @@ public class LeaveForceCommand extends DRECommand {
         		System.out.println("dGPlayers remove : "+dGPlayer.getName());
         	}
         }
-	        	
+	        
 
-		
-        	/*	
-        for (DInstancePlayer dPlayer : dPlayers) {
-        	if(dPlayer.getName().equals(player.getName())){
-        		dPlayers.remove(dPlayer);
-        	}
-        }
-        
-        
-        List<DGlobalPlayer> dGPlayers = DungeonsXL.getInstance().getDPlayers().getDGlobalPlayers();
-        for (DGlobalPlayer dGPlayer : dGPlayers) {
-        	if(dGPlayer.getName().equals(player.getName())){
-        		dGPlayers.remove(dGPlayer);
-        	}
-        }
-        List<DGamePlayer> dGamePlayers = DungeonsXL.getInstance().getDPlayers().getDGamePlayers();
-        for (DGamePlayer dGamePlayer : dGamePlayers) {
-        	if(dGamePlayer.getName().equals(player.getName())){
-        		dGamePlayers.remove(dGamePlayer);
-        	}
-        }
-        	 */
         
         MessageUtil.sendMessage(player, DMessage.CMD_LEAVE_SUCCESS.getMessage());
     }
