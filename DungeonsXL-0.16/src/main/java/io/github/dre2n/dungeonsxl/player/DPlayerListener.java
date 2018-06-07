@@ -77,23 +77,6 @@ public class DPlayerListener implements Listener {
         this.dPlayers = dPlayers;
     }
 
-    private void AutoReady(DGameWorld gameWorld){
-	    for (Player player : gameWorld.getGame().getPlayers()) {
-	    	DGamePlayer dPlayer = DGamePlayer.getByPlayer(player);
-		    if (gameWorld.getClassesSigns().isEmpty() || dPlayer.getDClass() != null) {
-		    	GameType forced = null;
-		        if (gameWorld.getConfig() != null) {
-		            forced = gameWorld.getConfig().getForcedGameType();
-		        }
-		        dPlayer.ready(forced == null ? GameTypeDefault.PVE_LIMITED_MOBS: forced);
-		    }
-		
-		    if (dPlayer.isReady()) {
-		        MessageUtil.sendMessage(dPlayer.getPlayer(), plugin.getMessageConfig().getMessage(dPlayer.isReady() ? DMessage.PLAYER_READY : DMessage.ERROR_READY));
-		    }
-	    }
-
-    }
     @EventHandler
     public void onPlayerJoinDungeon(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
@@ -117,6 +100,23 @@ public class DPlayerListener implements Listener {
             dGameWorld.startGame();
             AutoReady(dGameWorld);
         }
+    }
+    private void AutoReady(DGameWorld gameWorld){
+	    for (Player player : gameWorld.getGame().getPlayers()) {
+	    	DGamePlayer dPlayer = DGamePlayer.getByPlayer(player);
+		    if (gameWorld.getClassesSigns().isEmpty() || dPlayer.getDClass() != null) {
+		    	GameType forced = null;
+		        if (gameWorld.getConfig() != null) {
+		            forced = gameWorld.getConfig().getForcedGameType();
+		        }
+		        dPlayer.ready(forced == null ? GameTypeDefault.PVE_LIMITED_MOBS: forced);
+		    }
+		
+		    if (dPlayer.isReady()) {
+		        MessageUtil.sendMessage(dPlayer.getPlayer(), plugin.getMessageConfig().getMessage(dPlayer.isReady() ? DMessage.PLAYER_READY : DMessage.ERROR_READY));
+		    }
+	    }
+
     }
     
     @EventHandler
