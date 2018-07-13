@@ -59,9 +59,8 @@ public class LeaveForceCommand extends DRECommand {
         Player player = (Player) sender;
 
 
-        
-		List<Game> Gamelist= DungeonsXL.getInstance().getGames();
-        	
+        /*
+		List<Game> Gamelist= DungeonsXL.getInstance().getGames();	
         for (Game game : Gamelist) {
         	for(Player somePlayer : game.getPlayers()){
         		if(player.getName().equals(somePlayer.getName())){
@@ -70,6 +69,7 @@ public class LeaveForceCommand extends DRECommand {
         		}
         	}
         }
+        
         
 		List<DGroup> dGroups = DungeonsXL.getInstance().getDGroups();
 		for (DGroup dGroup : dGroups) {
@@ -81,6 +81,9 @@ public class LeaveForceCommand extends DRECommand {
 	        	}
 	        }
         }
+        */
+        
+        
 		/*Proper order to remove all object*/
         List<DInstancePlayer> dPlayers = DungeonsXL.getInstance().getDPlayers().getDInstancePlayers();
         for (DInstancePlayer dPlayer : new ArrayList<DInstancePlayer>(dPlayers)) {

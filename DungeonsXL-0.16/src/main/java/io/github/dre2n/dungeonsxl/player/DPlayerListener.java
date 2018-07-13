@@ -96,9 +96,9 @@ public class DPlayerListener implements Listener {
             return;
         }
         if (!dGameWorld.isPlaying()) {
-            dGameWorld.getGame().setStarted(true);
-            dGameWorld.startGame();
             AutoReady(dGameWorld);
+            //dGameWorld.getGame().setStarted(true);
+            //dGameWorld.startGame();
         }
     }
     private void AutoReady(DGameWorld gameWorld){
@@ -128,7 +128,6 @@ public class DPlayerListener implements Listener {
             return;
         }
 
-        //AutoStart
         if (!gameWorld.isPlaying()) {
             event.setCancelled(true);
         }
